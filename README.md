@@ -30,20 +30,7 @@ AssetUX project documentation
 
 5、Xlua use
 
-#目录结构
- The directory structure
 
-AssetUX
-&ensp;&ensp;&ensp;&ensp;ConfigV     存放版本配置文件
-&ensp;&ensp;&ensp;&ensp;Component   存放脚本代码
-&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;VersionControl
-&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;AssetGenerated
-&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;AssetDownload
-&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;AssetsLoad
-&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;XLua   
-&ensp;&ensp;&ensp;&ensp;Demo  存放场景资源和代码
-&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;DemoUpdateAsset 
-&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;DemoXlua
 	
 
 # 二、资源版本控制
@@ -177,7 +164,7 @@ Xlua use
 
 Reference Xlua project  documentation.
 
-#联系
+# 联系
 qq群：629868435
 
 # contact
