@@ -48,6 +48,7 @@ AssetUX project documentation
 项目中每个版本中资源差异暂时使用SVN或git做管理，后面增加功能；
 &ensp; 
 &ensp; 
+
 **版本命名规范**
 
 第一部分为主版本号，
