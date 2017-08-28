@@ -83,7 +83,12 @@ namespace zcode.AssetBundlePacker
         /// </summary>
         public bool Load(string file_name)
         {
+            Debug.Log("Load manifest data file = " + file_name);
+
             bool result = SimpleJsonReader.ReadFromFile<ResourcesManifestData>(ref Data, file_name);
+
+            Debug.Log("Load manifest data result = " + result);
+
             if (result)
                 Build();
             return result;
@@ -102,6 +107,7 @@ namespace zcode.AssetBundlePacker
         /// </summary>
         private void Build()
         {
+            //重写解析Json，解析自定义json
             AssetTable = new Dictionary<string, List<string>>();
             SceneTable = new Dictionary<string, string>();
             if(Data.AssetBundles != null)

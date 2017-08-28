@@ -110,6 +110,7 @@ namespace AssetBundles
 				Debug.Log("[AssetBundleManager] " + text);
 		}
 	
+        
 	#if UNITY_EDITOR
 		// Flag to indicate if we want to simulate assetBundles in Editor without building them actually.
         // Flag表示我们想在编辑器下模拟assetBundles
@@ -134,7 +135,7 @@ namespace AssetBundles
 		}
 		
 	
-		#endif
+		#endif 
 	
         //获取Streaming资源路径，可读不可写;
 		private static string GetStreamingAssetsPath()
@@ -158,23 +159,25 @@ namespace AssetBundles
         //设置资源URL;
 		public static void SetSourceAssetBundleURL(string absolutePath)
 		{
+            /*
 #if DEVELOPMENT_BUILD || UNITY_EDITOR
             BaseDownloadingURL = absolutePath + Utility.GetPlatformName() + "/";//例如  http://192.168.10.15:7888/Android/
 #else
             BaseDownloadingURL = absolutePath;//自定义语句
-#endif
+#endif */
+            BaseDownloadingURL = absolutePath;//自定义语句
             Debug.Log("download URL:"+BaseDownloadingURL);
 		}
 	
         //设置开发资源服务;
 		public static void SetDevelopmentAssetBundleServer()
 		{
-			#if UNITY_EDITOR
+			/* #if UNITY_EDITOR
 			// If we're in Editor simulation mode, we don't have to setup a download URL
             // 如果我们在编辑器模式下，我们不用设置下载URL
 			if (SimulateAssetBundleInEditor)
 				return;
-			#endif
+			#endif  */
 
             //从Resources目录下加载AssetBundleServerURL文件
 			TextAsset urlFile = Resources.Load("AssetBundleServerURL") as TextAsset;
@@ -237,21 +240,21 @@ namespace AssetBundles
         // 加载AssetBundle载货单;
 		static public AssetBundleLoadManifestOperation Initialize (string manifestAssetBundleName)
 		{
-	#if UNITY_EDITOR
+	/*#if UNITY_EDITOR
 			Log (LogType.Info, "Simulation Mode: " + (SimulateAssetBundleInEditor ? "Enabled" : "Disabled"));
-	#endif
+	#endif */
 	
 			var go = new GameObject("AssetBundleManager", typeof(AssetBundleManager));
 			DontDestroyOnLoad(go); //创建AssetBundleManager对象，加载不销毁;
 
             Debug.Log("manifest assetBundle name: " + manifestAssetBundleName);
-
+/*
 	#if UNITY_EDITOR	
 			// If we're in Editor simulation mode, we don't need the manifest assetBundle.
             //如果我们在编辑器模拟模式，我们不需要assetBundle载货单;
 			if (SimulateAssetBundleInEditor)
 				return null;
-	#endif
+	#endif */
             
 
 			LoadAssetBundle(manifestAssetBundleName, true);
@@ -265,13 +268,13 @@ namespace AssetBundles
 		static protected void LoadAssetBundle(string assetBundleName, bool isLoadingAssetBundleManifest = false)
 		{
 			Log(LogType.Info, "Loading Asset Bundle " + (isLoadingAssetBundleManifest ? "Manifest: " : ": ") + assetBundleName);
-	
+	/*
 	#if UNITY_EDITOR
 			// If we're in Editor simulation mode, we don't have to really load the assetBundle and its dependencies.
             //如果我们在编辑模式，我们不用真的加载assetBundle和它的依赖
 			if (SimulateAssetBundleInEditor)
 				return;
-	#endif
+	#endif */
 	
 			if (!isLoadingAssetBundleManifest)
 			{
@@ -369,6 +372,7 @@ namespace AssetBundles
 				return true;
 	
 			WWW download = null;
+            /*
 #if DEVELOPMENT_BUILD || UNITY_EDITOR
 			string url = m_BaseDownloadingURL + assetBundleName;//原来语句
 #else
@@ -378,7 +382,13 @@ namespace AssetBundles
             
             else                      //从www是下载;
                 url = m_BaseDownloadingURL + "?file=" +assetBundleName; //自定义语句;
-#endif
+#endif */
+            string url = "";
+            if (isLoadingAsset == true) //已经加载文件，从缓存里加载;
+                url = m_BaseDownloadingURL + assetBundleName; //自定义语句;
+
+            else                      //从www是下载;
+                url = m_BaseDownloadingURL + "/" + assetBundleName; //自定义语句;
             // For manifest assetbundle, always download it as we don't have hash for it.
             //因为 manifest assetbundle，已经下载它所以我们不对它hash;
 
@@ -461,12 +471,12 @@ namespace AssetBundles
         // 卸载assetbundle和它的依赖;
 		static public void UnloadAssetBundle(string assetBundleName)
 		{
-	#if UNITY_EDITOR
+	/*#if UNITY_EDITOR
 			// If we're in Editor simulation mode, we don't have to load the manifest assetBundle.
             //如果是编辑模式返回;
 			if (SimulateAssetBundleInEditor)
 				return;
-	#endif
+	#endif */
 	
 			//Debug.Log(m_LoadedAssetBundles.Count + " assetbundle(s) in memory before unloading " + assetBundleName);
 	
@@ -581,7 +591,8 @@ namespace AssetBundles
 			Log(LogType.Info, "Loading " + assetName + " from " + assetBundleName + " bundle");
 	
 			AssetBundleLoadAssetOperation operation = null;
-	#if UNITY_EDITOR
+/*	
+#if UNITY_EDITOR
 			if (SimulateAssetBundleInEditor)
 			{
 				string[] assetPaths = AssetDatabase.GetAssetPathsFromAssetBundleAndAssetName(assetBundleName, assetName);
@@ -596,7 +607,8 @@ namespace AssetBundles
 				operation = new AssetBundleLoadAssetOperationSimulation (target);
 			}
 			else
-	#endif
+	#endif */
+
 			{
 				assetBundleName = RemapVariantName (assetBundleName);
 				LoadAssetBundle (assetBundleName);
@@ -615,13 +627,13 @@ namespace AssetBundles
 			Log(LogType.Info, "Loading " + levelName + " from " + assetBundleName + " bundle");
 	
 			AssetBundleLoadOperation operation = null;
-	#if UNITY_EDITOR
+	/*#if UNITY_EDITOR
 			if (SimulateAssetBundleInEditor)
 			{
 				operation = new AssetBundleLoadLevelSimulationOperation(assetBundleName, levelName, isAdditive);
 			}
 			else
-	#endif
+	#endif */
 			{
 				assetBundleName = RemapVariantName(assetBundleName);
 				LoadAssetBundle (assetBundleName);

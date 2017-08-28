@@ -47,6 +47,7 @@ namespace zcode.AssetBundlePacker
 
             Debug.Log("emLoadPatternn = " + LoadPattern.ResourcesLoadPattern);// 测试使用 Edit wxw 2017.8.16
 
+            /* 原语句; 
 #if UNITY_EDITOR
             if (LoadPattern.ResourcesLoadPattern == emLoadPattern.EditorAsset
                 || LoadPattern.ResourcesLoadPattern == emLoadPattern.All)
@@ -56,6 +57,8 @@ namespace zcode.AssetBundlePacker
                     return result;
             }
 #endif
+            */
+
 
             if (LoadPattern.ResourcesLoadPattern == emLoadPattern.AssetBundle
                 || LoadPattern.ResourcesLoadPattern == emLoadPattern.All)
@@ -64,13 +67,15 @@ namespace zcode.AssetBundlePacker
                 if (result != null)
                     return result;
             }
+
+            /*原语句;
             if (LoadPattern.ResourcesLoadPattern == emLoadPattern.Original 
                 || LoadPattern.ResourcesLoadPattern == emLoadPattern.All)
             {
                 result = ResourcesManager.LoadResources<T>(asset);
                 if (result != null)
                     return result;
-            }
+            }*/
 
             return result;
         }

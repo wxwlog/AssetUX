@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using AssetUX;
 
-public class demoUpdateAsset : MonoBehaviour {
+public class DemoDownloadAsset : MonoBehaviour
+{
 
     public MainUpdater mainUpdater;
 

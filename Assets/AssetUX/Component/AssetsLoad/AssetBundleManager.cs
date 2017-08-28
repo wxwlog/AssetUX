@@ -113,14 +113,18 @@ namespace zcode.AssetBundlePacker
                 if (!IsReady)
                     return null;
 
-                asset = asset.ToLower();
+                asset = asset.ToLower();//字符转为小写;
 
                 T result = null;
                 string[] assetbundlesname = FindAllAssetBundleNameByAsset(asset);
+
+                //Debug.Log("assetbundlename lenght = " + assetbundlesname.Length);
+
                 if (assetbundlesname != null)
                 {
                     for (int i = 0; i < assetbundlesname.Length; ++i)
                     {
+                        Debug.Log(assetbundlesname[i]); //Edit wxwlog 2017.8.22
                         AssetBundle ab = LoadAssetBundleAndDependencies(assetbundlesname[i]);
                         if (ab != null)
                         {
@@ -548,7 +552,8 @@ namespace zcode.AssetBundlePacker
         /// <summary>
         ///   启动(仅内部启用)
         /// </summary>
-        void Launch()
+       // void Launch() //原语句 Edit wxwlog 2017.8.24
+        public void Launch()
         {
             if (assetbundle_permanent_ == null)
                 assetbundle_permanent_ = new Dictionary<string, AssetBundle>();
@@ -558,8 +563,9 @@ namespace zcode.AssetBundlePacker
                 assetbundle_temporary_ = new Dictionary<string, AssetBundle>();
             IsReady = false;
             ErrorCode = emErrorCode.None;
-            StopAllCoroutines();
-            StartCoroutine(Preprocess());
+            /*StopAllCoroutines();                 原语句;
+            StartCoroutine(Preprocess());*/
+            PreprocessFinished();
         }
 
         /// <summary>
@@ -575,6 +581,7 @@ namespace zcode.AssetBundlePacker
         /// </summary>
         IEnumerator Preprocess()
         {
+           /*  //原语句;
             //创建资源根目录
             if (!Directory.Exists(Common.PATH))
                 Directory.CreateDirectory(Common.PATH);
@@ -619,7 +626,8 @@ namespace zcode.AssetBundlePacker
             {
                 yield return CopyAllInitialFiles();
             }
-
+            */
+            yield return null; //测试语句 Edit 2017.8.24
             PreprocessFinished();
         }
 
@@ -707,7 +715,7 @@ namespace zcode.AssetBundlePacker
         /// </summary>
         void Awake()
         {
-            Launch();
+           // Launch();原语句 Edit wxwlog 2017.8.24
         }
 
         /// <summary>

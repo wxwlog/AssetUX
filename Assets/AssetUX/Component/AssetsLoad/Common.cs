@@ -18,7 +18,8 @@ namespace zcode.AssetBundlePacker
     {
 #if UNITY_EDITOR
         public static string STREAMING_ASSETS_PATH = Application.streamingAssetsPath;
-        public static string PERSISTENT_DATA_PATH = Application.dataPath + "/PersistentAssets";
+        //public static string PERSISTENT_DATA_PATH = Application.dataPath + "/PersistentAssets"; //原语句;
+        public static string PERSISTENT_DATA_PATH = Application.persistentDataPath;
 #elif UNITY_STANDALONE_WIN
         public static string STREAMING_ASSETS_PATH = Application.streamingAssetsPath;
         public static string PERSISTENT_DATA_PATH = Application.dataPath + "/PersistentAssets";
@@ -47,7 +48,7 @@ namespace zcode.AssetBundlePacker
         /// <summary>
         /// 资源所在根文件夹名
         /// </summary>
-        public const string ROOT_FOLDER_NAME = "AssetBundle";
+        public const string ROOT_FOLDER_NAME = "AssetUXDemo/Windows";//"AssetBundle";
 
         /// <summary>
         ///   常驻根路径
@@ -75,7 +76,7 @@ namespace zcode.AssetBundlePacker
         /// <summary>
         ///   主Manifest文件名称（必须存在）
         /// </summary>
-        public const string MAIN_MANIFEST_FILE_NAME = "AssetBundle";
+        public const string MAIN_MANIFEST_FILE_NAME = "Windows";// "AssetBundle";
 
         /// <summary>
         ///   ResourcesManifest文件名称（必须存在）
@@ -146,6 +147,8 @@ namespace zcode.AssetBundlePacker
         public static AssetBundleManifest LoadMainManifest()
         {
             string file = Common.GetFileFullName(Common.MAIN_MANIFEST_FILE_NAME);
+            Debug.Log("manifest path = " + file);
+
             return LoadMainManifestByPath(file);
         }
 
@@ -174,6 +177,7 @@ namespace zcode.AssetBundlePacker
         {
             if (!System.IO.File.Exists(full_name))
             {
+                Debug.Log("Manifest文件不存在");  //Edit wxw 2017.8.24
                 return null;
             }
 
