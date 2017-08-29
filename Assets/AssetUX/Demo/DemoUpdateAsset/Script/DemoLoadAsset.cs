@@ -63,21 +63,17 @@ public class DemoLoadAsset : MonoBehaviour {
             yield break;
         yield return StartCoroutine(request);//开启协程;
 
-        // Get the asset.
-        TextAsset prefab = request.GetAsset<TextAsset>();//转为TextAsset对象;
-
-        if (prefab != null)
-        {  
-            showText.text = prefab.text; 
-        }
-        else
+        string error;
+        LoadedAssetBundle bundle =  AssetBundleManager.GetLoadedAssetBundle(assetBundleName, out error);
+        if (bundle != null)
         {
-            Debug.Log("TextAsset 为空");
+            showText.text = bundle.m_AssetBundle.LoadAsset<TextAsset>(assetName).text; 
         }
+
 
         // Calculate and display the elapsed time.
         float elapsedTime = Time.realtimeSinceStartup - startTime;
-        Debug.Log(assetName + (prefab == null ? " was not" : " was") + " loaded successfully in " + elapsedTime + " seconds");
+        Debug.Log(assetName + (bundle == null ? " was not" : " was") + " loaded successfully in " + elapsedTime + " seconds");
 
 
     }

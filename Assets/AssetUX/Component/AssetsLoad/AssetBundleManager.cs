@@ -268,13 +268,6 @@ namespace AssetBundles
 		static protected void LoadAssetBundle(string assetBundleName, bool isLoadingAssetBundleManifest = false)
 		{
 			Log(LogType.Info, "Loading Asset Bundle " + (isLoadingAssetBundleManifest ? "Manifest: " : ": ") + assetBundleName);
-	/*
-	#if UNITY_EDITOR
-			// If we're in Editor simulation mode, we don't have to really load the assetBundle and its dependencies.
-            //如果我们在编辑模式，我们不用真的加载assetBundle和它的依赖
-			if (SimulateAssetBundleInEditor)
-				return;
-	#endif */
 	
 			if (!isLoadingAssetBundleManifest)
 			{
@@ -372,17 +365,7 @@ namespace AssetBundles
 				return true;
 	
 			WWW download = null;
-            /*
-#if DEVELOPMENT_BUILD || UNITY_EDITOR
-			string url = m_BaseDownloadingURL + assetBundleName;//原来语句
-#else
-             string url ="";
-            if(isLoadingAsset == true) //已经加载文件，从缓存里加载;
-                url = m_BaseDownloadingURL +assetBundleName; //自定义语句;
-            
-            else                      //从www是下载;
-                url = m_BaseDownloadingURL + "?file=" +assetBundleName; //自定义语句;
-#endif */
+         
             string url = "";
                                //从www是下载;
             url = m_BaseDownloadingURL + "\\" + assetBundleName; //自定义语句;
@@ -549,8 +532,16 @@ namespace AssetBundles
 						keysToRemove.Add(keyValue.Key);
 						continue;
 					}
-				
-					//Debug.Log("Downloading " + keyValue.Key + " is done at frame " + Time.frameCount);
+
+                    Debug.Log("down Done :" + bundle.name);
+
+                    /*if (bundle.name == "hello_text") //测试使用
+                    {
+                        TextAsset t = bundle.LoadAsset<TextAsset>("hello.txt");
+                        Debug.Log(t.text);
+                    }*/
+
+                    //Debug.Log("Downloading " + keyValue.Key + " is done at frame " + Time.frameCount);
 					
                     //把下载的assetBundle加到LoadedAssetBundle字典里;
                     //keyValue增加到移除列表里;

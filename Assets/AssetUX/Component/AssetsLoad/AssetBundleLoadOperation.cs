@@ -156,10 +156,14 @@ namespace AssetBundles
 		
 		public override T GetAsset<T>()
 		{
-			if (m_Request != null && m_Request.isDone)
-				return m_Request.asset as T;
-			else
-				return null;
+            if (m_Request != null && m_Request.isDone)
+            {
+                Debug.Log("m_Request != null && m_Request.isDone");
+
+                return m_Request.asset as T;
+            }
+            else
+                return null;
 		}
 		
 		// Returns true if more Update calls are required.
