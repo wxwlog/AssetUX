@@ -14,6 +14,13 @@ public class DemoLoadAsset : MonoBehaviour {
     public string assetTextName;
     public Text showText;
 
+    public string assetBundleImageName;
+    public string assetImageName;
+    public Image showImage;
+
+
+    Texture2D texture_ = null;
+
     // Use this for initialization
     IEnumerator Start()
     {
@@ -75,9 +82,54 @@ public class DemoLoadAsset : MonoBehaviour {
         float elapsedTime = Time.realtimeSinceStartup - startTime;
         Debug.Log(assetName + (bundle == null ? " was not" : " was") + " loaded successfully in " + elapsedTime + " seconds");
 
+        //yield return null;
+    }
+
+    public void LoadImage()
+    {
+        StartCoroutine(InstantiateImageAsync(assetBundleImageName, assetImageName));
+    }
+
+    protected IEnumerator InstantiateImageAsync(string assetBundleName, string assetName)
+    {
+        // This is simply to get the elapsed time for this phase of AssetLoading.
+        float startTime = Time.realtimeSinceStartup;
+
+        // Load asset from assetBundle.
+        AssetBundleLoadAssetOperation request = AssetBundleManager.LoadAssetAsync(assetBundleName, assetName, typeof(GameObject));
+        if (request == null)
+            yield break;
+        yield return StartCoroutine(request);//开启协程;
+
+        string error;
+        LoadedAssetBundle bundle = AssetBundleManager.GetLoadedAssetBundle(assetBundleName, out error);
+        if (bundle != null)
+        {
+            texture_ = bundle.m_AssetBundle.LoadAsset<Texture2D>(assetName);                 //用GUI显示;
+            
+            Sprite st = Sprite.Create(texture_,new Rect(0,0,texture_.width,texture_.height), Vector2.zero);
+            showImage.sprite = st;                                                           //用UI Image显示;    
+        }
+
+
+        // Calculate and display the elapsed time.
+        float elapsedTime = Time.realtimeSinceStartup - startTime;
+        Debug.Log(assetName + (bundle == null ? " was not" : " was") + " loaded successfully in " + elapsedTime + " seconds");
 
     }
 
+    void OnGUI()
+    {
+        OnGUI_LoadTexture();
+    }
+
+    void OnGUI_LoadTexture()
+    {
+        if (texture_ != null)
+        {
+            GUI.DrawTexture(new Rect(Screen.width/2, Screen.height/2,200f, 200f), texture_);
+        }
+    }
 
     public void LoadModel()
     {
