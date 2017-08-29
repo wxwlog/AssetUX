@@ -166,7 +166,7 @@ namespace AssetBundles
             BaseDownloadingURL = absolutePath;//自定义语句
 #endif */
             BaseDownloadingURL = absolutePath;//自定义语句
-            Debug.Log("download URL:"+BaseDownloadingURL);
+            Debug.Log("Set URL:"+BaseDownloadingURL);
 		}
 	
         //设置开发资源服务;
@@ -588,31 +588,14 @@ namespace AssetBundles
 			Log(LogType.Info, "Loading " + assetName + " from " + assetBundleName + " bundle");
 	
 			AssetBundleLoadAssetOperation operation = null;
-/*	
-#if UNITY_EDITOR
-			if (SimulateAssetBundleInEditor)
-			{
-				string[] assetPaths = AssetDatabase.GetAssetPathsFromAssetBundleAndAssetName(assetBundleName, assetName);
-				if (assetPaths.Length == 0)
-				{
-					Debug.LogError("There is no asset with name \"" + assetName + "\" in " + assetBundleName);
-					return null;
-				}
-	
-				// @TODO: Now we only get the main object from the first asset. Should consider type also.
-				Object target = AssetDatabase.LoadMainAssetAtPath(assetPaths[0]);
-				operation = new AssetBundleLoadAssetOperationSimulation (target);
-			}
-			else
-	#endif */
 
-			{
-				assetBundleName = RemapVariantName (assetBundleName);
-				LoadAssetBundle (assetBundleName);
-				operation = new AssetBundleLoadAssetOperationFull (assetBundleName, assetName, type);
+
+			assetBundleName = RemapVariantName (assetBundleName);
+			LoadAssetBundle (assetBundleName);
+			operation = new AssetBundleLoadAssetOperationFull (assetBundleName, assetName, type);
 	
-				m_InProgressOperations.Add (operation);
-			}
+			m_InProgressOperations.Add (operation);
+
 	
 			return operation;
 		}

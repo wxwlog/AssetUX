@@ -1,24 +1,23 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using AssetBundles;
 using UnityEngine.SceneManagement;
 
 public class DemoLoadAsset : MonoBehaviour {
 
-    public string assetBundleName;
-    public string assetName;
-    
+    public string assetBundleModelName;
+    public string assetModelName;
+
+    public string assetBundleTextName;
+    public string assetTextName;
+    public Text showText;
+
     // Use this for initialization
     IEnumerator Start()
     {
-
         yield return StartCoroutine(Initialize());
-
-
-        // Load asset.
-        yield return StartCoroutine(InstantiateGameObjectAsync(assetBundleName, assetName));
-
 	}
 
     protected IEnumerator Initialize()
@@ -43,20 +42,52 @@ public class DemoLoadAsset : MonoBehaviour {
 #endif 
         
         AssetBundleManager.SetSourceAssetBundleURL(localUrl);
-       // AssetBundleManager.isLoadingAsset = true;//设置已经加载资源;
-
-		// Or customize the URL based on your deployment or configuration
-		//AssetBundleManager.SetSourceAssetBundleURL("http://www.MyWebsite/MyAssetBundles");
-
-
-        // Initialize AssetBundleManifest which loads the AssetBundleManifest object.
-        var request = AssetBundleManager.Initialize();
-
-
+        var request = AssetBundleManager.Initialize(); //初始化;
 
         if (request != null)
             yield return StartCoroutine(request);
     }
+
+    public void LoadText()
+    {
+        StartCoroutine(InstantiateTextAsync(assetBundleTextName,assetTextName));
+    }
+    protected IEnumerator InstantiateTextAsync(string assetBundleName, string assetName)
+    {
+        // This is simply to get the elapsed time for this phase of AssetLoading.
+        float startTime = Time.realtimeSinceStartup;
+
+        // Load asset from assetBundle.
+        AssetBundleLoadAssetOperation request = AssetBundleManager.LoadAssetAsync(assetBundleName, assetName, typeof(GameObject));
+        if (request == null)
+            yield break;
+        yield return StartCoroutine(request);//开启协程;
+
+        // Get the asset.
+        TextAsset prefab = request.GetAsset<TextAsset>();//转为TextAsset对象;
+
+        if (prefab != null)
+        {  
+            showText.text = prefab.text; 
+        }
+        else
+        {
+            Debug.Log("TextAsset 为空");
+        }
+
+        // Calculate and display the elapsed time.
+        float elapsedTime = Time.realtimeSinceStartup - startTime;
+        Debug.Log(assetName + (prefab == null ? " was not" : " was") + " loaded successfully in " + elapsedTime + " seconds");
+
+
+    }
+
+
+    public void LoadModel()
+    {
+        StartCoroutine(InstantiateGameObjectAsync(assetBundleModelName, assetModelName));
+    }
+
 
     protected IEnumerator InstantiateGameObjectAsync(string assetBundleName, string assetName)
     {
