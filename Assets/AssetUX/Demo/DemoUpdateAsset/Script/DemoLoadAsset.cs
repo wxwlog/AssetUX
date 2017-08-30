@@ -18,7 +18,9 @@ public class DemoLoadAsset : MonoBehaviour {
     public string assetImageName;
     public Image showImage;
 
-
+    public string assetBundleSceneName;
+    public string assetSceneName;
+    
     Texture2D texture_ = null;
 
     // Use this for initialization
@@ -161,4 +163,23 @@ public class DemoLoadAsset : MonoBehaviour {
 
     }
 
+    public void LoadScene()
+    {
+        StartCoroutine(InitializeLevelAsync(assetSceneName, false));
+    }
+    protected IEnumerator InitializeLevelAsync(string levelName, bool isAdditive)
+    {
+        // This is simply to get the elapsed time for this phase of AssetLoading.
+        float startTime = Time.realtimeSinceStartup;
+
+        // Load level from assetBundle.
+        AssetBundleLoadOperation request = AssetBundleManager.LoadLevelAsync(assetBundleSceneName, levelName, isAdditive);
+        if (request == null)
+            yield break;
+        yield return StartCoroutine(request);
+
+        // Calculate and display the elapsed time.
+        float elapsedTime = Time.realtimeSinceStartup - startTime;
+        Debug.Log("Finished loading scene " + levelName + " in " + elapsedTime + " seconds");
+    }
 }
