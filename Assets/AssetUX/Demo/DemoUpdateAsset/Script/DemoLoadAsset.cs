@@ -182,4 +182,11 @@ public class DemoLoadAsset : MonoBehaviour {
         float elapsedTime = Time.realtimeSinceStartup - startTime;
         Debug.Log("Finished loading scene " + levelName + " in " + elapsedTime + " seconds");
     }
+
+
+    public void LoadXLuaScene()
+    {
+        Application.LoadLevel("demoXLua");
+    }
+
 }
