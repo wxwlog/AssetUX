@@ -4,7 +4,7 @@
 --GameObject = CS.UnityEngine.GameObject
 
 local function Main()
-	print("Hello MeowFramework")
+	print("Hello AssetUX")
 end
 
 Main()

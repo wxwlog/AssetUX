@@ -13,6 +13,7 @@ public class DemoDownloadAsset : MonoBehaviour
     {
         yield return mainUpdater.LoadAllVersionFiles();
         yield return mainUpdater.UpdateFromRemoteAsset();
+        Application.LoadLevel("DemoLoadAsset_02");
     }	
 	
 	// Update is called once per frame

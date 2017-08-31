@@ -186,7 +186,7 @@ public class DemoLoadAsset : MonoBehaviour {
 
     public void LoadXLuaScene()
     {
-        Application.LoadLevel("demoXLua");
+        Application.LoadLevel("DemoXLua_03");
     }
 
 }
