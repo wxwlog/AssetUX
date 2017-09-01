@@ -37,15 +37,14 @@ AssetUX project documentation
 
 ## 资源生成
 
-选中大版本，生成对应版本目录，将所有assetbundle打包成一个压缩包；
-
-选中小版本，生成对应版本目录，将assetbundle放到该目录下；
-
-这两种方式，都生成版本控制文件；
-
-
-
-项目中每个版本中资源差异暂时使用SVN或git做管理，后面增加功能；
+简单方法增量更新
+&ensp; 
+找出每个版本之间的差异文件，放到下载目录。（手工做）
+&ensp; 
+服务器端存放多个版本
+　　存放每个版本差异文件  （版本目录是版本号，如1.0.2.5可作为目录名）
+　　最新版本号   （json文件）
+		
 &ensp; 
 &ensp; 
 
@@ -66,52 +65,35 @@ AssetUX project documentation
 
 &ensp; 
 &ensp; 
-二、Resource version control
-
-Resources generated
-
-Selected large version, generate the corresponding version catalogue, all the assetbundle packaged into a package;
-
-Selected small version, generate the corresponding version of the directory, put the assetbundle in that directory;
-
-Both ways, generate version control file;
-
-Project resource differences in each version temporarily use SVN or git do management, adding features behind;
-
-
-
 
 
 ## 客户端版本控制
+客户端选择下载最新版本
+　　１．获取服务端最新版本号，对比本地版本，
+　　２．如果有新版本，根据本地保存的下一次更新的版本号下载；
+　　３．如果没有，直接进入游戏。
 
-获取服务端版本文件，解析，选择是否更新大版本或是小版本；
-
-大版本更新；
-
-下载资源压缩包，完成后，删除之前版本资源文件，解压；
-
-小版本更新；
-
-根据版本文件，下载对应资源，保存或替换原有资源；
 
 &ensp; 
 &ensp; 
 
-The client version control
-
-Access to the server version file, parse, choose update whether big or small versions;
-
-Major version update;
-
-Download package, complete, delete the previous version resource file, extract;
-
-Small version update;
-
-According to the version of the file, download the corresponding resources, save or replacing the original resources;
-
-
-
-
+版本差异包管理的两种方式，
+　　 第一种是每次出新版本时，只需要生成与之前一个版本的差异包，
+　　　　玩家需要跨多个版本更新时，需要下载多个差异包。
+			
+　　　　优点是每次出版本只需要出一个差异包，
+　　　　缺点就是玩家如果跨很多个版本更新时，将会耗费更多的时间和流量。
+　　　　
+&ensp; 
+&ensp; 
+			
+　　第二种是每次出新版本时，将最新版本和之前每一个版本都做对比，
+　　　　生成多个差异包，例如现在要出1.3的新版，那么开发团队需要做
+　　　　得就是生成一个1.3与1.1的差异包，再生成一个1.3和1.2的差异包，
+　　　　这样玩家就可以从任何一个版本一次性升级到最新版本。
+			
+　　　　优点是玩家跨版本更新的时间和流量都减少，
+　　　　缺点是每次出版本需要耗费的时间更长。
 
 
 
@@ -170,5 +152,6 @@ qq群：629868435
 
 # contact
 QQ group：629868435
+
 
 
