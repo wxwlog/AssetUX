@@ -22,6 +22,10 @@ namespace AssetBundles
 		public static void ToggleLocalAssetBundleServer ()
 		{
 			bool isRunning = IsRunning();
+
+
+            UnityEngine.Debug.Log("ab server isRunning = " + isRunning);//测试语句
+
 			if (!isRunning)
 			{
 				Run ();
@@ -71,9 +75,13 @@ namespace AssetBundles
 		
 		static void Run ()
 		{
-			string pathToAssetServer = Path.Combine(Application.dataPath, "AssetBundleManager/Editor/AssetBundleServer.exe");
+			//string pathToAssetServer = Path.Combine(Application.dataPath, "AssetBundleManager/Editor/AssetBundleServer.exe");//原语句
+            string pathToAssetServer = Path.Combine(Application.dataPath, "AssetUX/Component/AssetGenerated/AssetBundleManager/Editor/AssetBundleServer.exe");
 			string pathToApp = Application.dataPath.Substring(0, Application.dataPath.LastIndexOf('/'));
-	
+
+            UnityEngine.Debug.Log(pathToAssetServer);//测试语句;
+            UnityEngine.Debug.Log(pathToApp);//测试语句;
+
 			KillRunningAssetBundleServer();
 			
 			BuildScript.WriteServerURL();

@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEditor;
 using System.Collections;
+using AssetUX;
 
 namespace AssetBundles
 {
@@ -24,7 +25,11 @@ namespace AssetBundles
 		[MenuItem ("AssetsUX/AssetBundles/Build AssetBundles")]
 		static public void BuildAssetBundles ()
 		{
-			BuildScript.BuildAssetBundles();
+			//BuildScript.BuildAssetBundles();  原语句;
+            
+            EditorUtility.SetDirty(Settings.Instance);
+            Selection.activeObject = Settings.Instance;
+           // ScriptableObject.CreateInstance<Settings>();
 		}
 	}
 }
