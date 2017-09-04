@@ -13,7 +13,7 @@ namespace AssetBundles
 {
 	internal class LaunchAssetBundleServer : ScriptableSingleton<LaunchAssetBundleServer>
 	{
-		const string kLocalAssetbundleServerMenu = "Assets/AssetBundles/Local AssetBundle Server";
+		const string kLocalAssetbundleServerMenu = "AssetsUX/AssetBundles/Local AssetBundle Server";
 
 		[SerializeField]
 		int 	m_ServerPID = 0;

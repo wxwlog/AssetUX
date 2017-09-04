@@ -6,7 +6,7 @@ namespace AssetBundles
 {
 	public class AssetBundlesMenuItems
 	{
-		const string kSimulationMode = "Assets/AssetBundles/Simulation Mode";
+		const string kSimulationMode = "AssetsUX/AssetBundles/Simulation Mode";
 	
 		[MenuItem(kSimulationMode)]
 		public static void ToggleSimulationMode ()
@@ -21,7 +21,7 @@ namespace AssetBundles
 			return true;
 		}
 		
-		[MenuItem ("Assets/AssetBundles/Build AssetBundles")]
+		[MenuItem ("AssetsUX/AssetBundles/Build AssetBundles")]
 		static public void BuildAssetBundles ()
 		{
 			BuildScript.BuildAssetBundles();
