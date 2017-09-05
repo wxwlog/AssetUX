@@ -39,7 +39,7 @@ namespace AssetUX
             // generate VersionFile for streaming aseets
             GenerateVersionFile(manifest, relativePath, bundleCopyPath, platformPath, true);
 
-            bundleCopyPath = Path.Combine(Path.Combine(serverPath, relativePath), platformPath);
+            bundleCopyPath = Path.Combine(Path.Combine(serverPath, Settings.VersionNumber), platformPath);
             if (Directory.Exists(bundleCopyPath))
             {
                 Directory.Delete(bundleCopyPath, true);

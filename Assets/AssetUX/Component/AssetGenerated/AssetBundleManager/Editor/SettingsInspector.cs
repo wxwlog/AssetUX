@@ -124,7 +124,7 @@ namespace AssetUX
                 var assetbundlePoolPath = "AssetBundles" + "/AssetBundlePool";      //Edit wxw 2017.8.10
                 var assetbundleServerPath = "AssetBundles/" + Settings.ProjectName;  //Edit wxw 2017.8.10
                 
-                BundleGenerater.Generate(Settings.RelativePath, assetbundlePoolPath, assetbundleServerPath, Settings.Platform);
+                BundleGenerater.Generate(Settings.ProjectName, assetbundlePoolPath, assetbundleServerPath, Settings.Platform);
                 Debug.Log("建立assetbundle资源完成"); //Edit wxw 2017.8.15 
             }
             

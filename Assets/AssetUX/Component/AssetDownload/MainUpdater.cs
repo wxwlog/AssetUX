@@ -77,13 +77,37 @@ namespace AssetUX
                 //var vFRoot = Path.Combine(ProjectName, Utils.GetBuildPlatform(Application.platform).ToString());//原语句 
                 //var vFPath = Path.Combine(vFRoot, VersionFileName);                                             //原语句                
 
-                var vFRoot = ProjectName +"/" + Application.platform.ToString();
-                var vFPath = vFRoot +"/" + VersionFileName; 
+                var vFRoot = ProjectName + "/" + Application.platform.ToString();
+                var vFPath = vFRoot + "/" + VersionFileName; 
+
+                var op = new DownloadOperation(this, SourceType.PersistentPath, vFPath);//先从PersistentPath里读版本文件
+                yield return op;
+                _persistentVersionInfo = JsonMapper.ToObject<VersionInfo>(op.Text);
+                if (_persistentVersionInfo == null)
+                {
+                    _persistentVersionInfo = new VersionInfo();
+                }
+                else  //PersistentPath 路径的版本文件为空;
+                {
+                    op = new DownloadOperation(this, SourceType.StreamingPath, vFPath);//读取StreamingPath里的版本文件
+                    yield return op;
+                    _streamingVersionInfo = JsonMapper.ToObject<VersionInfo>(op.Text);
+                    if (_streamingVersionInfo == null)
+                    {
+                        _streamingVersionInfo = new VersionInfo();
+                    }
+                    else //没有版本文件，中断;
+                    {
+                        Debug.LogError("streamingPath里没有版本文件");
+                    }
+
+                }
+
 
 
                 Debug.Log("LoadAllVersionFiles vPath = " + vFPath);// Edit wxw 2017.8.15
 
-                var op = new DownloadOperation(this, SourceType.RemotePath, vFPath);
+                op = new DownloadOperation(this, SourceType.RemotePath, vFPath);
                 yield return op;
                 if (!string.IsNullOrEmpty(op.Error))
                 {
@@ -92,21 +116,7 @@ namespace AssetUX
                 }
                 _remoteVersionInfo = JsonMapper.ToObject<VersionInfo>(op.Text);
 
-                op = new DownloadOperation(this, SourceType.PersistentPath, vFPath);
-                yield return op;
-                _persistentVersionInfo = JsonMapper.ToObject<VersionInfo>(op.Text);
-                if (_persistentVersionInfo == null)
-                {
-                    _persistentVersionInfo = new VersionInfo();
-                }
-
-                op = new DownloadOperation(this, SourceType.StreamingPath, vFPath);
-                yield return op;
-                _streamingVersionInfo = JsonMapper.ToObject<VersionInfo>(op.Text);
-                if (_streamingVersionInfo == null)
-                {
-                    _streamingVersionInfo = new VersionInfo();
-                }
+                
             }
         }
 
