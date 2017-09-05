@@ -35,17 +35,41 @@ namespace AssetUX
                 return instance;
             }
         }
-        [SerializeField] private string _versionNumber = "1.0.0.0904rele";    //版本号;
-        [SerializeField] private string _remoteUrl = "http://localhost/";
+        [SerializeField] 
+        private string _versionNumber = "1.0.0.0904rele";      //版本号;
 
-        [SerializeField] private string _versionFileName = "version_file.bytes";
-
-        [SerializeField] private string _relativePath = "MainUpdater";
+        [SerializeField]
+        private string  _nextVersionNumber = "1.0.0.0905rele";    //下次更新版本号;
         
-        [SerializeField] private BuildPlatform _currentPlatform = BuildPlatform.OSX;
-        
-        [SerializeField] private List<string> _loaclBundles = new List<string>();
+        [SerializeField] 
+        private string _remoteUrl = "http://localhost/";
 
+        [SerializeField] 
+        private string _versionFileName = "version_file.bytes";
+
+        [SerializeField]
+        private string _relativePath = "1.0.0.0904rele";
+
+        [SerializeField] 
+        private string _projectName = "TestGame";  //项目名 Edit wxwlog 2017.9.4
+
+        [SerializeField] 
+        private BuildPlatform _currentPlatform = BuildPlatform.OSX;
+        
+        [SerializeField] 
+        private List<string> _loaclBundles = new List<string>();
+
+        public static string ProjectName
+        {
+            get { return Instance._projectName; }
+            set { Instance._projectName = value; }
+        }
+
+        public static string NextVersionNumber
+        {
+            get { return Instance._nextVersionNumber; }
+            set { Instance._nextVersionNumber = value; }
+        }
 
         public static string VersionNumber
         {

@@ -20,9 +20,13 @@ namespace AssetUX
     [Serializable]
     public class VersionInfo
     {
-        public long VersionNum = 100000000000;
-
+        //public long VersionNum = 100000000000; 原语句
+        public string VersionNum = "1.0";
+        public string NextVersionNum = "";       //下一个版本号;
+        public string RemoteUrl = "";            //Edit wxwlog 2017.9.5
         public string RelativePath = "";
+        public string ProjectName = "";          //Edit wxwlog 2017.9.5
+        public string VersionFileName = "";
 
         public bool IsVersionCompelete = false;
 

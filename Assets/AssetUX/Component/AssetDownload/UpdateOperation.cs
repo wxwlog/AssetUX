@@ -71,7 +71,8 @@ namespace AssetUX
             if (!MainUpdater.IsSimulationMode)
 #endif
             {
-                if (originVersion.VersionNum < sourceVersion.VersionNum)
+               // if (originVersion.VersionNum < sourceVersion.VersionNum)
+                if (originVersion.VersionNum != sourceVersion.VersionNum)
                 {
                     foreach (var sourceBundle in sourceVersion.Bundles)
                     {

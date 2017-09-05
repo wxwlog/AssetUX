@@ -39,7 +39,7 @@ public class DemoLoadAsset : MonoBehaviour {
         // 	Another approach would be to make this configurable in the standalone player.)
 
 		// Use the following code if AssetBundles are embedded in the project for example via StreamingAssets folder etc:
-        string localUrl;
+        string localUrl="";
 #if UNITY_ANDROID                //目录分隔符  Windows用"\"，Mac OS用"/"。
        localUrl = "jar:file://"+path+"/"+name;  
 #elif UNITY_IPHONE  

@@ -10,6 +10,8 @@ namespace AssetUX
     public class SettingsInspector : UnityEditor.Editor
     {
         private readonly GUIContent _versionNumberText = new GUIContent("Version Number", "Version Number");
+        private readonly GUIContent _nextVersionNumberText = new GUIContent("Next Version Number", "Next Version Number");
+        private readonly GUIContent _projectNameText = new GUIContent("Project Name", "Project Name");
         private readonly GUIContent _remoteUrlText = new GUIContent("Remote Url", "Remote Aseetbundles URL");
         private readonly GUIContent _versionFileNameText = new GUIContent("Version File Name", "The Version File You Generate");
         private readonly GUIContent _relativePathText = new GUIContent("Relative Path", "");
@@ -22,13 +24,21 @@ namespace AssetUX
 
         public override void OnInspectorGUI()
         {
-            var downloaPath = Path.Combine(Path.Combine(Path.Combine(Settings.RemoteUrl, Settings.RelativePath), Settings.Platform.ToString()),
-                Settings.VersionFileName);
+            //var downloaPath = Path.Combine(Path.Combine(Path.Combine(Settings.RemoteUrl, Settings.RelativePath), Settings.Platform.ToString()),
+            //    Settings.VersionFileName); //原语句
+
+            var downloaPath =   Path.Combine( Path.Combine( Path.Combine(  Path.Combine(Settings.RemoteUrl,Settings.ProjectName), Settings.RelativePath),
+                Settings.Platform.ToString()),Settings.VersionFileName);
             EditorGUILayout.HelpBox(string.Format("You will download the assetbundles version file at url : {0}", downloaPath), MessageType.Info);
 
             EditorGUILayout.BeginHorizontal();
             Settings.VersionNumber = EditorGUILayout.TextField(_versionNumberText, Settings.VersionNumber).Trim();
             EditorGUILayout.EndHorizontal();
+
+            EditorGUILayout.BeginHorizontal();
+            Settings.NextVersionNumber = EditorGUILayout.TextField(_nextVersionNumberText, Settings.NextVersionNumber).Trim();
+            EditorGUILayout.EndHorizontal();
+
 
             EditorGUILayout.BeginHorizontal();
             Settings.RemoteUrl = EditorGUILayout.TextField(_remoteUrlText, Settings.RemoteUrl).Trim();
@@ -45,6 +55,12 @@ namespace AssetUX
             EditorGUILayout.BeginHorizontal();
             Settings.VersionFileName = EditorGUILayout.TextField(_versionFileNameText, Settings.VersionFileName).Trim();
             EditorGUILayout.EndHorizontal();
+
+            EditorGUILayout.BeginHorizontal();
+            Settings.ProjectName = EditorGUILayout.TextField(_projectNameText, Settings.ProjectName).Trim();
+            EditorGUILayout.EndHorizontal();
+
+
 
             EditorGUILayout.Space();
 
@@ -105,8 +121,8 @@ namespace AssetUX
                 //var assetbundleServerPath = Path.Combine(Application.dataPath.Substring(0, index), "AssetBundleServer");  //原语句
 
 
-                var assetbundlePoolPath = Application.dataPath + "/AssetBundlePool";      //Edit wxw 2017.8.10
-                var assetbundleServerPath = Application.dataPath + "/AssetBundleServer";  //Edit wxw 2017.8.10
+                var assetbundlePoolPath = "AssetBundles" + "/AssetBundlePool";      //Edit wxw 2017.8.10
+                var assetbundleServerPath = "AssetBundles/" + Settings.ProjectName;  //Edit wxw 2017.8.10
                 
                 BundleGenerater.Generate(Settings.RelativePath, assetbundlePoolPath, assetbundleServerPath, Settings.Platform);
                 Debug.Log("建立assetbundle资源完成"); //Edit wxw 2017.8.15 

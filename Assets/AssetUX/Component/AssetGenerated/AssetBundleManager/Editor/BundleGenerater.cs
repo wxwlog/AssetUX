@@ -94,10 +94,18 @@ namespace AssetUX
             bool localLimit)
         {
             VersionInfo versionInfo = new VersionInfo();
-            versionInfo.VersionNum = localLimit
+            
+            /*versionInfo.VersionNum = localLimit
                 ? long.Parse(DateTime.Now.ToString("yyMMddHHmmss"))
-                : long.Parse(DateTime.Now.ToString("yyMMddHHmmss")) + 1;
+                : long.Parse(DateTime.Now.ToString("yyMMddHHmmss")) + 1;*/ //原语句
+
+
+            versionInfo.VersionNum = Settings.VersionNumber;
+            versionInfo.NextVersionNum = Settings.NextVersionNumber;
+            versionInfo.RemoteUrl = Settings.RemoteUrl;
             versionInfo.RelativePath = relativePath;
+            versionInfo.VersionFileName = Settings.VersionFileName;
+            versionInfo.ProjectName = Settings.ProjectName;
 
             // fill version file with normal assetbundle infomation
             foreach (var bundle in manifest.GetAllAssetBundles())

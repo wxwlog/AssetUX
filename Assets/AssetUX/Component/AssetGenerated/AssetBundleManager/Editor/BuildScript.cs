@@ -180,9 +180,12 @@ namespace AssetBundles
             bool localLimit)
         {
             VersionInfo versionInfo = new VersionInfo();
-            versionInfo.VersionNum = localLimit
+            
+            /*versionInfo.VersionNum = localLimit
                 ? long.Parse(DateTime.Now.ToString("yyMMddHHmmss"))
-                : long.Parse(DateTime.Now.ToString("yyMMddHHmmss")) + 1;
+                : long.Parse(DateTime.Now.ToString("yyMMddHHmmss")) + 1;*/
+
+            versionInfo.VersionNum = Settings.VersionNumber;
             versionInfo.RelativePath = relativePath;
 
             // fill version file with normal assetbundle infomation
