@@ -16,9 +16,9 @@ namespace AssetUX
         private VersionInfo _persistentVersionInfo;
         private VersionInfo _streamingVersionInfo;
 
-        public string RemoteUrl;
-        public string ProjectName;
-        public string VersionFileName;
+        public string RemoteUrl;        //会动态更新值; Edit wxwlog 2017.9.5
+        public string ProjectName;      //会动态更新值;
+        public string VersionFileName;  //会动态更新值;
 
 #if UNITY_EDITOR
         private static int _isSimulationMode = -1;
@@ -60,8 +60,8 @@ namespace AssetUX
         public void Initialize(string remoteUrl, string projectName, string versionFileName)
         {
             RemoteUrl = remoteUrl;
-            ProjectName = projectName;
-            VersionFileName = versionFileName;
+            //ProjectName = projectName;
+            //VersionFileName = versionFileName;
         }
 
         /// <summary>
@@ -77,8 +77,8 @@ namespace AssetUX
                 //var vFRoot = Path.Combine(ProjectName, Utils.GetBuildPlatform(Application.platform).ToString());//原语句 
                 //var vFPath = Path.Combine(vFRoot, VersionFileName);                                             //原语句                
 
-                var vFRoot = ProjectName + "/" + Application.platform.ToString();
-                var vFPath = vFRoot + "/" + VersionFileName; 
+                var vFRoot = Settings.ProjectName + "/" + Application.platform.ToString();
+                var vFPath = vFRoot + "/" + Settings.VersionFileName; 
 
                 var op = new DownloadOperation(this, SourceType.PersistentPath, vFPath);//先从PersistentPath里读版本文件
                 yield return op;
@@ -86,6 +86,7 @@ namespace AssetUX
                 if (_persistentVersionInfo == null)
                 {
                     _persistentVersionInfo = new VersionInfo();
+
                 }
                 else  //PersistentPath 路径的版本文件为空;
                 {
@@ -99,13 +100,21 @@ namespace AssetUX
                     else //没有版本文件，中断;
                     {
                         Debug.LogError("streamingPath里没有版本文件");
+                        UnityEngine.Assertions.Assert.IsTrue(false);//中断;
                     }
 
                 }
 
+                VersionInfo temp = JsonMapper.ToObject<VersionInfo>(op.Text);
+                RemoteUrl = temp.RemoteUrl;
+                ProjectName = temp.ProjectName;
+                VersionFileName = temp.VersionFileName;                 //从新赋值;
+
+                vFPath =  Path.Combine(Path.Combine(Path.Combine(Path.Combine(RemoteUrl, ProjectName), temp.VersionNum),
+                Settings.Platform.ToString()), VersionFileName);
 
 
-                Debug.Log("LoadAllVersionFiles vPath = " + vFPath);// Edit wxw 2017.8.15
+                Debug.Log("Load remote vPath = " + vFPath);// Edit wxw 2017.8.15
 
                 op = new DownloadOperation(this, SourceType.RemotePath, vFPath);
                 yield return op;
