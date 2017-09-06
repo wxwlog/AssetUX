@@ -42,7 +42,7 @@ namespace AssetUX
         private string  _nextVersionNumber = "1.0.0.0905rele";    //下次更新版本号;
         
         [SerializeField] 
-        private string _remoteUrl = "http://localhost/";
+        private string _remoteUrl = "";
 
         [SerializeField] 
         private string _versionFileName = "version_file.bytes";
