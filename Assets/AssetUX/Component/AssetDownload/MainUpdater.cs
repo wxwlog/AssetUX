@@ -18,7 +18,7 @@ namespace AssetUX
 
         public string RemoteUrl;        //会动态更新值; Edit wxwlog 2017.9.5
         public string ProjectName;      //会动态更新值;
-        public string VersionFileName;  //会动态更新值;
+        public string VersionFileName;  //版本文件名不变，改变会让后面无法更新;
 
         public int State = 0;           //更新状态，0，不需要更新；1，更新，2，发生错误
 
@@ -112,8 +112,8 @@ namespace AssetUX
                 ProjectName = temp.ProjectName;
                 VersionFileName = temp.VersionFileName;                 //从新赋值;
 
-                Debug.Log(op.Text);
-                Debug.Log(temp);
+                Debug.Log("本地版本：" + temp.VersionNum);;
+                Debug.Log("本地下一个版本："+ temp.NextVersionNum);
 
                 //服务器上项目根目录版本文件;
                 vFPath =  Path.Combine( ProjectName, VersionFileName);
@@ -153,7 +153,9 @@ namespace AssetUX
                        yield break;
                        StopCoroutine("LoadAllVersionFiles"); //停止协程;
                    }
+                   State = 1;
                    _remoteVersionInfo = JsonMapper.ToObject<VersionInfo>(op.Text);
+                   Debug.Log("远程最新版本：" + tempServer.VersionNum);
                }
 
                 

@@ -132,7 +132,19 @@ namespace AssetUX
                             Utils.Instance.WriteBytesTo(SourceType.PersistentPath, CalcPath(_currentUpdatingBundle.Value.Name),
                                 _downloadOperation.Bytes);
                             _originVersionInfo.UpdateBundle(_currentUpdatingBundle.Value);
+                            
+                            //--------------------更新版本信息-----------------------------------;
                             _originVersionInfo.IsVersionCompelete = false;
+                            _originVersionInfo.VersionNum = _sourceVersionInfo.VersionNum;
+                            _originVersionInfo.NextVersionNum = _sourceVersionInfo.NextVersionNum;
+                            _originVersionInfo.RemoteUrl = _sourceVersionInfo.RemoteUrl;
+                            _originVersionInfo.RelativePath = _sourceVersionInfo.RelativePath;
+                            _originVersionInfo.ProjectName = _sourceVersionInfo.ProjectName;
+                            _originVersionInfo.VersionFileName = _sourceVersionInfo.VersionFileName;
+                            
+                            Debug.Log("写入文件版本号：" + _originVersionInfo.VersionNum);
+                            Debug.Log("写入文件Next版本号：" + _originVersionInfo.NextVersionNum);
+                            //--------------------------------------------------------------------
                             var bytes = System.Text.Encoding.ASCII.GetBytes(JsonMapper.ToJson(_originVersionInfo));
                             Utils.Instance.WriteBytesTo(SourceType.PersistentPath, CalcPath(_updater.VersionFileName), bytes);
 

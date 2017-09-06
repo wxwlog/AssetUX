@@ -11,25 +11,37 @@ public class DemoDownloadAsset : MonoBehaviour
     // Use this for initialization
     IEnumerator Start()
     {
-        yield return mainUpdater.LoadAllVersionFiles();
-        
+
+        do
+        {
+            yield return mainUpdater.LoadAllVersionFiles();
+            
+
+            if (mainUpdater.State == 1) //有新更新;
+            {
+                Debug.Log("开始从服务器是下载资源");
+                yield return mainUpdater.UpdateFromRemoteAsset();
+            }    
+
+            yield return null;
+
+            if (mainUpdater.State == 2) //发生错误时退出循环;
+                break;
+
+            if (mainUpdater.State == 0) //版本相同时退出循环;
+                break;
+
+        } while (true); 
 
         if (mainUpdater.State == 2)
         {
             Debug.Log("读取版本文件发生错误");
         }
-        else
-        {
-            if(mainUpdater.State == 0) //版本相同;不需要更新;
-            {
-                Application.LoadLevel("DemoLoadAsset_02");
-            }
-            else
-            {
-                yield return mainUpdater.UpdateFromRemoteAsset();
-                Application.LoadLevel("DemoLoadAsset_02");
-            }
             
+
+        if (mainUpdater.State == 0) //版本相同;不需要更新;
+        {
+            Application.LoadLevel("DemoLoadAsset_02");
         }
         
     }	
