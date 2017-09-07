@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using AssetBundles;
 using UnityEngine.SceneManagement;
+using AssetUX;
 
 public class DemoLoadAsset : MonoBehaviour {
 
@@ -40,6 +41,8 @@ public class DemoLoadAsset : MonoBehaviour {
 
 		// Use the following code if AssetBundles are embedded in the project for example via StreamingAssets folder etc:
         string localUrl="";
+
+        /*
 #if UNITY_ANDROID                //目录分隔符  Windows用"\"，Mac OS用"/"。
        localUrl = "jar:file://"+path+"/"+name;  
 #elif UNITY_IPHONE  
@@ -48,8 +51,41 @@ public class DemoLoadAsset : MonoBehaviour {
         string temp = Application.persistentDataPath + "/" + "AssetUXDemo/Windows";
         localUrl = "file://" +   temp.Replace("/","\\");
         //localUrl = "file://" + "C:\\Users\\B15\\AppData\\LocalLow\\DefaultCompany\\AssetUX\\AssetUXDemo\\Windows"; //例子路径;
-#endif 
-        
+#endif */
+
+
+        //判断persistentDataPath路径有没有文件，有从这个路径读；没有从streamingAssets目录读；
+        string temp = "";
+        temp = Application.persistentDataPath + "/" + Settings.ProjectName + "/" + Settings.Platform.ToString() + "/" + Settings.Platform.ToString();
+
+#if UNITY_STANDALONE_WIN || UNITY_EDITOR
+        localUrl = "file://" + temp.Replace("/", "\\");
+#endif
+
+        if (System.IO.File.Exists(temp)) //如果persistentDataPath路径下文件不存在，找streamingAssets目录下文件;
+        {
+            temp = Application.persistentDataPath + "/" + Settings.ProjectName + "/" + Settings.Platform.ToString();//重新赋值路径;
+
+#if UNITY_STANDALONE_WIN || UNITY_EDITOR
+            localUrl = "file://" + temp.Replace("/", "\\");
+#endif      
+        }
+        else  //从新赋值路径;
+        {
+      
+            temp = "file://" + Application.streamingAssetsPath + "/" + Settings.ProjectName + "/" + Settings.Platform.ToString() + "/" + Settings.Platform.ToString();
+            if (!System.IO.File.Exists(temp)) //还是不存在，退出;
+            {
+                Debug.Log("streamingAssetPath目录下找不到文件");
+                StopCoroutine(Initialize()); //协程没有停止;
+                yield return false;
+                Debug.Log("停止协程");
+            }
+
+            temp = "file://" + Application.streamingAssetsPath + "/" + Settings.ProjectName + "/" + Settings.Platform.ToString();//重新赋值路径;
+            localUrl = temp;
+        }
+
         AssetBundleManager.SetSourceAssetBundleURL(localUrl);
         var request = AssetBundleManager.Initialize(); //初始化;
 

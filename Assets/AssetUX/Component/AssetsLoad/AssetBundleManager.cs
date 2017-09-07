@@ -381,7 +381,7 @@ namespace AssetBundles
 
 			m_DownloadingWWWs.Add(assetBundleName, download);
 
-            Debug.Log("download RUL: " + url);
+            Debug.Log("download 资源: " + url);
 
             return false;
 		}
