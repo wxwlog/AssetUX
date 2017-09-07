@@ -25,10 +25,11 @@ public class DemoLoadAsset : MonoBehaviour {
     Texture2D texture_ = null;
 
     // Use this for initialization
-    IEnumerator Start()
+    IEnumerator Start()//原语句;
     {
         yield return StartCoroutine(Initialize());
 	}
+
 
     protected IEnumerator Initialize()
     {
@@ -78,7 +79,7 @@ public class DemoLoadAsset : MonoBehaviour {
             {
                 Debug.Log("streamingAssetPath目录下找不到文件");
                 StopCoroutine(Initialize()); //协程没有停止;
-                yield return false;
+                yield break;
                 Debug.Log("停止协程");
             }
 
