@@ -1,0 +1,1 @@
+{"VersionNum":"1.0.0.0904rele","NextVersionNum":"1.0.0.0905rele","RemoteUrl":"http://192.168.10.15:8080/static","RelativePath":"AssetUX","ProjectName":"AssetUX","VersionFileName":"version_file.bytes","IsVersionCompelete":false,"Bundles":[{"Name":"Windows","Size":1064,"Md5Code":"1NNUEGAdrEwpvpCVFnCSLA==","Dependencies":[]}],"BundlePath":{"assetbundlemanifest":"Windows"}}

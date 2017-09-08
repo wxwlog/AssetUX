@@ -9,6 +9,7 @@ public class DemoDownloadAsset : MonoBehaviour
 
     public MainUpdater mainUpdater;
     public Slider ProgressSlider;
+    public Text versionText;
     private UpdateOperation _updateOperation;
     // Use this for initialization
     IEnumerator Start()
@@ -21,9 +22,9 @@ public class DemoDownloadAsset : MonoBehaviour
 
             if (mainUpdater.State == 1) //有新更新;
             {
-                Debug.Log("开始从服务器是下载资源");
-                //yield return mainUpdater.UpdateFromRemoteAsset();
-                
+                Debug.Log("开始从服务器是下载资源，版本：" + mainUpdater.NextVersionNum);
+                versionText.text = "更新版本" +mainUpdater.NextVersionNum;            
+    
                 _updateOperation = mainUpdater.UpdateFromRemoteAsset();
                 yield return _updateOperation;
 
