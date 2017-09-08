@@ -33,7 +33,8 @@ namespace AssetUX
         /// <summary>
         /// the number of bytes you have downloaded for all files
         /// </summary>
-        public long TotalownloadedSize { get { return _writedSize + SingleDownloadedSize; } }
+        //public long TotalownloadedSize { get { return _writedSize + SingleDownloadedSize; } } //原语句;
+        public long TotalownloadedSize { get { return _writedSize; } }
         
         /// <summary>
         /// the size of all files
@@ -74,6 +75,10 @@ namespace AssetUX
                // if (originVersion.VersionNum < sourceVersion.VersionNum)
                 if (originVersion.VersionNum != sourceVersion.VersionNum)
                 {
+
+                    TotalSize = 0;   //Edit wxwlog 2017.9.8 重置数值;
+                    _writedSize = 0; //Edit wxwlog 2017.9.8 重置数值;
+
                     foreach (var sourceBundle in sourceVersion.Bundles)
                     {
                         var isContain = false;
@@ -143,8 +148,8 @@ namespace AssetUX
                             _originVersionInfo.ProjectName = _sourceVersionInfo.ProjectName;
                             _originVersionInfo.VersionFileName = _sourceVersionInfo.VersionFileName;
                             
-                            Debug.Log("写入文件版本号：" + _originVersionInfo.VersionNum);
-                            Debug.Log("写入文件Next版本号：" + _originVersionInfo.NextVersionNum);
+                            //Debug.Log("写入文件版本号：" + _originVersionInfo.VersionNum);
+                            //Debug.Log("写入文件Next版本号：" + _originVersionInfo.NextVersionNum);
                             //--------------------------------------------------------------------
                             var bytes = System.Text.Encoding.ASCII.GetBytes(JsonMapper.ToJson(_originVersionInfo));
                             Utils.Instance.WriteBytesTo(SourceType.PersistentPath, CalcPath(_updater.VersionFileName), bytes);

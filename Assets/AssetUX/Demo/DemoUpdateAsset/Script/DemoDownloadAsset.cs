@@ -56,7 +56,8 @@ public class DemoDownloadAsset : MonoBehaviour
 	void Update () {
         if (_updateOperation != null)
         {
-            ProgressSlider.value = _updateOperation.SingleProgress;
+            ProgressSlider.value = _updateOperation.TotalProgress;
+            Debug.Log("进度：" + _updateOperation.TotalProgress * 100 + "%");
         }
 	}
 }
