@@ -4,7 +4,7 @@
 --GameObject = CS.UnityEngine.GameObject
 
 local function Test()
-	print("Hello LuaLoader")
+	print("Hello LuaLoader 0.6")
 end
 
 Test()

@@ -117,7 +117,8 @@ namespace AssetUX
                         if (_updateBundleQueue.Count > 0)
                         {
                             _currentUpdatingBundle = _updateBundleQueue.Dequeue();
-                            _downloadOperation = new DownloadOperation(_updater, _currentUpdatingBundle.Key, CalcPath(_currentUpdatingBundle.Value.Name));
+
+                            _downloadOperation = new DownloadOperation(_updater, _currentUpdatingBundle.Key, CalcRemotePath(_currentUpdatingBundle.Value.Name));
                             _updater.StartCoroutine(_downloadOperation);
                         }
                         else
@@ -153,7 +154,7 @@ namespace AssetUX
                             if (_updateBundleQueue.Count > 0)
                             {
                                 _currentUpdatingBundle = _updateBundleQueue.Dequeue();
-                                _downloadOperation = new DownloadOperation(_updater, _currentUpdatingBundle.Key, CalcPath(_currentUpdatingBundle.Value.Name));
+                                _downloadOperation = new DownloadOperation(_updater, _currentUpdatingBundle.Key, CalcRemotePath(_currentUpdatingBundle.Value.Name));
                                 _updater.StartCoroutine(_downloadOperation);
                             }
                             else
@@ -175,6 +176,13 @@ namespace AssetUX
         private string CalcPath(string fileName)
         {
             var rootPath = Path.Combine(_updater.ProjectName, Utils.GetBuildPlatform().ToString());
+            var path = Path.Combine(rootPath, fileName);
+            return path;
+        }
+
+        private string CalcRemotePath(string fileName) //计算远程路径 Edit wxwlog 2017.9.8
+        {
+            var rootPath = Path.Combine( Path.Combine(_updater.ProjectName, _updater.NextVersionNum),Utils.GetBuildPlatform().ToString());
             var path = Path.Combine(rootPath, fileName);
             return path;
         }

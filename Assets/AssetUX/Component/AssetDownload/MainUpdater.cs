@@ -19,6 +19,7 @@ namespace AssetUX
         public string RemoteUrl;        //会动态更新值; Edit wxwlog 2017.9.5
         public string ProjectName;      //会动态更新值;
         public string VersionFileName;  //版本文件名不变，改变会让后面无法更新;
+        public string NextVersionNum;   //下一个版本号;  Edit wxwlog 2017.9.8
 
         public int State = 0;           //更新状态，0，不需要更新；1，更新，2，发生错误
 
@@ -111,6 +112,7 @@ namespace AssetUX
                 RemoteUrl = temp.RemoteUrl;
                 ProjectName = temp.ProjectName;
                 VersionFileName = temp.VersionFileName;                 //从新赋值;
+                NextVersionNum = temp.NextVersionNum;
 
                 Debug.Log("本地版本：" + temp.VersionNum);;
                 Debug.Log("本地下一个版本："+ temp.NextVersionNum);

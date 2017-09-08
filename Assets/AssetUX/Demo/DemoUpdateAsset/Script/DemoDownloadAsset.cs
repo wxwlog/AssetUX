@@ -1,13 +1,15 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using AssetUX;
 
 public class DemoDownloadAsset : MonoBehaviour
 {
 
     public MainUpdater mainUpdater;
-
+    public Slider ProgressSlider;
+    private UpdateOperation _updateOperation;
     // Use this for initialization
     IEnumerator Start()
     {
@@ -20,7 +22,11 @@ public class DemoDownloadAsset : MonoBehaviour
             if (mainUpdater.State == 1) //有新更新;
             {
                 Debug.Log("开始从服务器是下载资源");
-                yield return mainUpdater.UpdateFromRemoteAsset();
+                //yield return mainUpdater.UpdateFromRemoteAsset();
+                
+                _updateOperation = mainUpdater.UpdateFromRemoteAsset();
+                yield return _updateOperation;
+
             }    
 
             yield return null;
@@ -48,6 +54,9 @@ public class DemoDownloadAsset : MonoBehaviour
 	
 	// Update is called once per frame
 	void Update () {
-		
+        if (_updateOperation != null)
+        {
+            ProgressSlider.value = _updateOperation.SingleProgress;
+        }
 	}
 }
