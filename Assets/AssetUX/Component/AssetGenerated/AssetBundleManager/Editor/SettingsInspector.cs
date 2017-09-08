@@ -137,7 +137,7 @@ namespace AssetUX
                 EditorUtility.SetDirty(Settings.Instance);
                 AssetDatabase.SaveAssets();  //注释 保存这个Settings
 
-                Debug.Log("GUI changed"); //Edit wxw 2017.8.15 
+               // Debug.Log("GUI changed"); //Edit wxw 2017.8.15 
             }
 
             

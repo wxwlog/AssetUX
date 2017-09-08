@@ -1,0 +1,50 @@
+--
+-- Created by IntelliJ IDEA.
+-- User: snatic
+-- Date: 2017/7/15
+-- Time: 上午2:04
+-- To change this template use File | Settings | File Templates.
+--
+
+--
+-- <代码文件解释说明>
+--
+local function classTestController()
+    local self = {}
+
+    ---- 成员变量 ----
+
+    ---- 成员函数 前置声明 ----
+
+    ---- 成员函数 ----
+
+    function self.Awake()
+
+    end
+
+    function self.Start()
+        --local resLoader = MainGame.GetResourceLoader(self.behaviour.ProjectName) --原语句 
+		local resLoader = CS.Meow.Framework.MainGame.GetLuaLoader(self.behaviour.ProjectName)  --Edit wxw 2017.8.14
+        --self.loadPrefabOp = resLoader:LoadGameObject("Assets/Demo/Prefabs/CanvasUI.prefab")  --这句话有问题，没有这个方法;
+		--CS.UnityEngine.GameObject.Instantiate("Assets/Demo/Prefabs/CanvasUI.prefab")   --测试使用 Edit wxw 2017.8.14
+		CS.UnityEngine.Debug.Log("lua Start  ok")
+    end
+
+    function self.Update()
+       -- if self.loadPrefabOp.IsDone then            --暂时注释掉 Edit wxw 2017.8.14
+       --     local go = self.loadPrefabOp.Asset
+       --     GameObject.Instantiate(go)
+       -- end
+    end
+
+    function self.OnDestroy()
+    end
+
+    ---- END
+
+    return self
+end
+
+return classTestController
+
+

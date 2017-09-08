@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using XLua;
 using AssetBundles;
-
+using AssetUX;
 
 public class TestXLua : MonoBehaviour {
 
@@ -11,13 +11,17 @@ public class TestXLua : MonoBehaviour {
     public string scriptName;
     public LuaEnv luaenv = null;
 
-	void Start () {
+    public LuaLoader luaLoader;
+
+	IEnumerator Start () {
+        /*       
         luaenv = new LuaEnv();
         luaenv.DoString("CS.UnityEngine.Debug.Log('Xlua scene say hello world')");
-        //luaenv.Dispose();
+        StartCoroutine(LoadScript(abundleScriptName, scriptName));*/
 
-        StartCoroutine(LoadScript(abundleScriptName, scriptName));
+        yield return StartCoroutine(luaLoader.Initialize(abundleScriptName, scriptName));
 
+        luaLoader.DoString("helloLuaLoader.lua.txt", "TestXLua");
 	}
 
 

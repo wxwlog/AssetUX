@@ -1,0 +1,10 @@
+
+--Color = CS.UnityEngine.Color
+--MainGame = CS.Meow.Framework.MainGame
+--GameObject = CS.UnityEngine.GameObject
+
+local function Test()
+	print("Hello LuaLoader")
+end
+
+Test()

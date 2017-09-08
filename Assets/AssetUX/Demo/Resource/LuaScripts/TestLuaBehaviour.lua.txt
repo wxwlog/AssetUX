@@ -1,0 +1,34 @@
+--
+-- <代码文件解释说明>
+--
+local function classTestController()
+    local self = {}
+
+    ---- 成员变量 ----
+
+    ---- 成员函数 前置声明 ----
+
+    ---- 成员函数 ----
+
+    function self.Awake()
+
+    end
+
+    function self.Start()
+        local image = self.gameObject:GetComponent("Image")
+        image.color = Color.gray
+    end
+
+    function self.Update()
+
+    end
+
+    function self.OnDestroy()
+    end
+
+    ---- END
+
+    return self
+end
+
+return classTestController
