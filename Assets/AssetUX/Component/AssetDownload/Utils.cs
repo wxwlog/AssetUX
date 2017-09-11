@@ -17,7 +17,7 @@ namespace AssetUX
     {
         Windows,
         OSX,
-        Andriod,
+        Android,
         iOS,
         OtherPlatform,
     }
@@ -57,8 +57,20 @@ namespace AssetUX
                         fullPath.Length - fullPath.LastIndexOf(Path.DirectorySeparatorChar) - 1);
                     if (!Directory.Exists(directoryPath))
                     {
-                        Directory.CreateDirectory(directoryPath);
+                        //Directory.CreateDirectory(directoryPath); //原语句
+                        DirectoryInfo temInfo =  Directory.CreateDirectory(directoryPath);
+                        if (temInfo.Exists) //测试
+                        {
+                            Debug.Log("创建目录成功：" + directoryPath);
+                        }
+                        else
+                        {
+                            Debug.Log("创建目录失败：" + directoryPath);
+                        }
                     }
+
+                    Debug.Log("write Path: " + Application.persistentDataPath);
+
                     File.WriteAllBytes(Path.Combine(directoryPath, fileName), bytes);
                     Debug.Log("向" + directoryPath + "写文件" + fileName + "完成");// 测试输出 Edit wxw 2017.8.10
                     break;
@@ -85,7 +97,7 @@ namespace AssetUX
             switch (platform)
             {
                 case RuntimePlatform.Android:
-                    buildPlatform = BuildPlatform.Andriod;
+                    buildPlatform = BuildPlatform.Android;
                     break;
                 case RuntimePlatform.IPhonePlayer:
                     buildPlatform = BuildPlatform.iOS;
@@ -117,7 +129,7 @@ namespace AssetUX
             UnityEditor.BuildTarget target = UnityEditor.BuildTarget.NoTarget;
             switch (platform)
             {
-                case BuildPlatform.Andriod:
+                case BuildPlatform.Android:
                     target = UnityEditor.BuildTarget.Android;
                     break;
                 case BuildPlatform.iOS:

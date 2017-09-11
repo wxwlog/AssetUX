@@ -232,7 +232,8 @@ namespace AssetBundles
 	    //初始化;
 		static public AssetBundleLoadManifestOperation Initialize ()
 		{
-			return Initialize(Utility.GetPlatformName());
+			//return Initialize(Utility.GetPlatformName()); //原语句;
+            return Initialize(AssetUX.Settings.Platform.ToString()); ;
 		}
 			
 	
@@ -367,8 +368,15 @@ namespace AssetBundles
 			WWW download = null;
          
             string url = "";
-                               //从www是下载;
+
+
+
+#if UNITY_STANDALONE_WIN || UNITY_EDITOR
             url = m_BaseDownloadingURL + "\\" + assetBundleName; //自定义语句;
+#elif UNITY_ANDROID || UNITY_IOS
+             url = m_BaseDownloadingURL + "/" + assetBundleName; //自定义语句;
+#endif
+
             // For manifest assetbundle, always download it as we don't have hash for it.
             //因为 manifest assetbundle，已经下载它所以我们不对它hash;
 

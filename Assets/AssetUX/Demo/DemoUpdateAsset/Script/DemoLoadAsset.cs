@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using AssetBundles;
 using UnityEngine.SceneManagement;
 using AssetUX;
+using System.IO;
 
 public class DemoLoadAsset : MonoBehaviour {
 
@@ -36,11 +37,6 @@ public class DemoLoadAsset : MonoBehaviour {
         // Don't destroy this gameObject as we depend on it to run the loading script.
         DontDestroyOnLoad(gameObject);
 
-        // With this code, when in-editor or using a development builds: Always use the AssetBundle Server
-        // (This is very dependent on the production workflow of the project. 
-        // 	Another approach would be to make this configurable in the standalone player.)
-
-		// Use the following code if AssetBundles are embedded in the project for example via StreamingAssets folder etc:
         string localUrl="";
 
         /*
@@ -57,25 +53,46 @@ public class DemoLoadAsset : MonoBehaviour {
 
         //判断persistentDataPath路径有没有文件，有从这个路径读；没有从streamingAssets目录读；
         string temp = "";
-        temp = Application.persistentDataPath + "/" + Settings.ProjectName + "/" + Settings.Platform.ToString() + "/" + Settings.Platform.ToString();
+        temp = Application.persistentDataPath + "/" + Settings.ProjectName + "/" + Settings.Platform.ToString();
 
-#if UNITY_STANDALONE_WIN || UNITY_EDITOR
-        localUrl = "file://" + temp.Replace("/", "\\");
-#endif
 
-        if (System.IO.File.Exists(temp)) //如果persistentDataPath路径下文件不存在，找streamingAssets目录下文件;
+        //获取指定路径下面的所有资源文件  
+        if (System.IO.Directory.Exists(temp))
         {
-            temp = Application.persistentDataPath + "/" + Settings.ProjectName + "/" + Settings.Platform.ToString();//重新赋值路径;
+            DirectoryInfo direction = new DirectoryInfo(temp);
+            FileInfo[] files = direction.GetFiles("*", SearchOption.AllDirectories);
 
-#if UNITY_STANDALONE_WIN || UNITY_EDITOR
-            localUrl = "file://" + temp.Replace("/", "\\");
-#endif      
+            Debug.Log(files.Length);
+
+            for (int i = 0; i < files.Length; i++)
+            {
+                if (files[i].Name.EndsWith(".meta"))
+                {
+                    continue;
+                }
+                Debug.Log("Name:" + files[i].Name);
+                //Debug.Log( "FullName:" + files[i].FullName );  
+                //Debug.Log( "DirectoryName:" + files[i].DirectoryName );  
+            }
+        }
+        else
+        {
+            Debug.Log(temp + "目录不存在");
+        }
+
+        temp = Application.persistentDataPath + "/" + Settings.ProjectName + "/" + Settings.Platform.ToString() + "/" + Settings.Platform.ToString();
+       if (System.IO.File.Exists(temp)) //如果persistentDataPath路径下文件不存在，找streamingAssets目录下文件;
+        {
+            Debug.Log("persistentDataPath路径找到文件");
+            temp = "file://" + Application.persistentDataPath + "/" + Settings.ProjectName + "/" + Settings.Platform.ToString();//重新赋值路径;
+                   
         }
         else  //从新赋值路径;
         {
-      
-            temp = "file://" + Application.streamingAssetsPath + "/" + Settings.ProjectName + "/" + Settings.Platform.ToString() + "/" + Settings.Platform.ToString();
-            if (!System.IO.File.Exists(temp)) //还是不存在，退出;
+            Debug.Log("查找streamingAssetPath路径");
+
+            temp =  Application.streamingAssetsPath + "/" + Settings.ProjectName + "/" + Settings.Platform.ToString() + "/" + Settings.Platform.ToString();
+            if (System.IO.File.Exists(temp)) //还是不存在，退出;
             {
                 Debug.Log("streamingAssetPath目录下找不到文件");
                 StopCoroutine(Initialize()); //协程没有停止;
@@ -83,11 +100,22 @@ public class DemoLoadAsset : MonoBehaviour {
                 Debug.Log("停止协程");
             }
 
-            temp = "file://" + Application.streamingAssetsPath + "/" + Settings.ProjectName + "/" + Settings.Platform.ToString();//重新赋值路径;
-            localUrl = temp;
+            temp = Application.streamingAssetsPath + "/" + Settings.ProjectName + "/" + Settings.Platform.ToString();//重新赋值路径;
+            //localUrl = temp;
         }
 
-        AssetBundleManager.SetSourceAssetBundleURL(localUrl);
+#if UNITY_STANDALONE_WIN || UNITY_EDITOR
+
+        localUrl = "file://" + temp.Replace("/", "\\");
+#elif UNITY_ANDROID || UNITY_IOS
+        localUrl = temp;
+       // Debug.Log("demo load persistentDataPath = " + Application.streamingAssetsPath);
+
+#endif
+
+       
+
+       AssetBundleManager.SetSourceAssetBundleURL(localUrl);
         var request = AssetBundleManager.Initialize(); //初始化;
 
         if (request != null)

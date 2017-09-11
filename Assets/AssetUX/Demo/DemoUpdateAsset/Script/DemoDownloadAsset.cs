@@ -14,7 +14,7 @@ public class DemoDownloadAsset : MonoBehaviour
     // Use this for initialization
     IEnumerator Start()
     {
-
+        RemoteLog.Instance.Start("192.168.10.15",2010);//远程日志输出;
         do
         {
             yield return mainUpdater.LoadAllVersionFiles();
