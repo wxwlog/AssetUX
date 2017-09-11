@@ -84,8 +84,15 @@ public class DemoLoadAsset : MonoBehaviour {
        if (System.IO.File.Exists(temp)) //如果persistentDataPath路径下文件不存在，找streamingAssets目录下文件;
         {
             Debug.Log("persistentDataPath路径找到文件");
+
+#if UNITY_STANDALONE_WIN || UNITY_EDITOR
+
+            temp = Application.persistentDataPath + "/" + Settings.ProjectName + "/" + Settings.Platform.ToString();//重新赋值路径;
+#elif UNITY_ANDROID || UNITY_IOS
             temp = "file://" + Application.persistentDataPath + "/" + Settings.ProjectName + "/" + Settings.Platform.ToString();//重新赋值路径;
-                   
+#endif
+
+
         }
         else  //从新赋值路径;
         {
