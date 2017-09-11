@@ -1,0 +1,11 @@
+﻿使用方法:
+
+1.将RemoteLog.cs拷贝到你的Unity Project里面；
+
+2.在任意一个MonoBehavior脚本的Start()函数中，调用RemoteLog.Instance.Start(主机IP，端口)；目前默认端口是2010；
+
+3.运行URLogWin.exe，打开LOG显示窗口；
+
+4.运行你的Unity Project，无论是Editor还是手机版都可以；
+
+5.调用UnityEngine.Debug.LogXXX()函数显示的LOG都会发送到URLogWin窗口显示；
