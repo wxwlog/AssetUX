@@ -48,16 +48,6 @@ namespace AssetUX
                     break;
                 case SourceType.PersistentPath:
                     _targetUrl = Utils.GetWWWPersistentPath(path);
-
-                    if (Settings.Platform == BuildPlatform.Windows)
-                    {
-                       //_targetUrl =  _targetUrl.Replace('/', '\\');//windows平台替换为'\'方便读取文件;
-                       _targetUrl = "file://C:\\Users\\B15\\AppData\\LocalLow\\DefaultCompany\\AssetUX\\AssetUX\\Windows\\version_file.bytes";
-                        //Debug.Log("路径/替换为\\");
-                        Debug.Log("本地persistentPath：" + _targetUrl);
-                    }
-
-                   
                     break;
                 case SourceType.StreamingPath:
                     _targetUrl = Utils.GetWWWStreamingAssetPath(path);

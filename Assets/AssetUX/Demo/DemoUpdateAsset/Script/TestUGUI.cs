@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using AssetUX;
+using AssetBundles;
 
 public class TestUGUI : MonoBehaviour {
 
@@ -12,10 +14,24 @@ public class TestUGUI : MonoBehaviour {
 
     Text[] GUI_Texts;
 	// Use this for initialization
-	void Start () {
+    IEnumerator Start()
+    {
 		
         //实例化Canvas
-        canvas = (GameObject)Resources.Load("Profabs/Canvas"); //预制物体放Resources目录下
+        if (AssetBundleManager.isExistExtenalABundle)
+        {
+            AssetBundleLoadAssetOperation request = AssetBundleManager.LoadAssetAsync("canvas_profab", "Canvas.prefab", typeof(GameObject));
+            if (request == null)
+                yield break;
+            yield return StartCoroutine(request);//开启协程;
+
+            canvas = request.GetAsset<GameObject>();//转为GameObject对象;
+
+            Debug.Log("读取外部assetbundle");
+        }
+        else { //不存在，加载本地资源;
+            canvas = (GameObject)Resources.Load("Profabs/Canvas"); //预制物体放Resources目录下
+        }
 
         if (canvas != null)
         {

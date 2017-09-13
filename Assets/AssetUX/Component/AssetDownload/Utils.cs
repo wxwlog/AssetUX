@@ -180,7 +180,14 @@ namespace AssetUX
 
         public static string GetWWWPersistentPath(string relativePath)
         {
+#if UNITY_STANDALONE_WIN || UNITY_EDITOR
+            string dataPath = Application.persistentDataPath;
+            dataPath = dataPath.Replace("/", "\\");
+            relativePath = relativePath.Replace("/", "\\");
+            string path = "file://" + dataPath;
+#elif UNITY_ANDROID || UNITY_IOS
             string path = "file://" + Application.persistentDataPath;
+#endif
             return Path.Combine(path, relativePath);
         }
     }

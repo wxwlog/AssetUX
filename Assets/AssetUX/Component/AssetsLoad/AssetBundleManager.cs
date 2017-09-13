@@ -72,7 +72,7 @@ namespace AssetBundles
 		static Dictionary<string, string> m_DownloadingErrors = new Dictionary<string, string> ();
 		static List<AssetBundleLoadOperation> m_InProgressOperations = new List<AssetBundleLoadOperation> ();//在进行的操作;
 		static Dictionary<string, string[]> m_Dependencies = new Dictionary<string, string[]> ();
-        static public bool isLoadingAsset = false;  //自定义，是否已经加载资源;
+        static public bool isExistExtenalABundle = false;  //是否外部存储中有assetbundle;
 		public static LogMode logMode
 		{
 			get { return m_LogMode; }

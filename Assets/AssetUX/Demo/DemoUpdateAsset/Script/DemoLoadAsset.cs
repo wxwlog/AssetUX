@@ -91,7 +91,7 @@ public class DemoLoadAsset : MonoBehaviour {
 #elif UNITY_ANDROID || UNITY_IOS
             temp = "file://" + Application.persistentDataPath + "/" + Settings.ProjectName + "/" + Settings.Platform.ToString();//重新赋值路径;
 #endif
-
+            AssetBundleManager.isExistExtenalABundle = true;//存在外部保存的assetbundle;
 
         }
         else  //从新赋值路径;
