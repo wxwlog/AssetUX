@@ -255,6 +255,10 @@ public class DemoLoadAsset : MonoBehaviour {
         Debug.Log("Finished loading scene " + levelName + " in " + elapsedTime + " seconds");
     }
 
+    public void LoadUGUIScene()
+    {
+        Application.LoadLevel("SceneTestUGUI");
+    }
 
     public void LoadXLuaScene()
     {
