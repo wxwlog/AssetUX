@@ -74,6 +74,7 @@ Simple method, incremental updates, each version generated after the assetbundle
 
 &ensp; 
 &ensp; 
+
 The client choose to download the latest version
 
 1.The server's latest version number, comparing local version;
@@ -88,13 +89,16 @@ The client choose to download the latest version
 
 版本差异包管理的两种方式:
 
+-------------------
 第一种是每次出新版本时，只需要生成与之前一个版本的差异包，玩家需要跨多个版本更新时，需要下载多个差异包。
 
 优点是每次出版本只需要出一个差异包；
 
 缺点就是玩家如果跨很多个版本更新时，将会耗费更多的时间和流量。
 &ensp; 
+&ensp;  
 
+-------------------
 第二种是每次出新版本时，将最新版本和之前每一个版本都做对比，生成多个差异包，例如现在要出1.3的新版，那么开发团队需要做的就是生成一个1.3与1.1的差异包，再生成一个1.3和1.2的差异包，这样玩家就可以从任何一个版本一次性升级到最新版本。
 
 优点是玩家跨版本更新的时间和流量都减少；
@@ -161,7 +165,7 @@ Thank sNaticY/assetUpdater - core, unity assetbundleManager, Tencent/xLua open s
 # 联系
 qq群：629868435
 
-# contact
+contact
 QQ group：629868435
 
 
