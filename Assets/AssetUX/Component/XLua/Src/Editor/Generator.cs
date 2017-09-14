@@ -29,7 +29,7 @@ namespace CSObjectWrapEditor
         //public static string common_path = "../../Gen/";
 #else
         //public static string common_path = Application.dataPath + "/XLua/Gen/";//原语句
-        public static string common_path = Application.dataPath + "AssetUX/Component/XLua/Gen/";
+        public static string common_path = Application.dataPath + "/AssetUX/Component/XLua/Gen/";
 #endif
 
         static GeneratorConfig()
